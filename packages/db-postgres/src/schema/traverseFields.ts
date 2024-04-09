@@ -705,7 +705,7 @@ export const traverseFields = ({
           if (relatedCollectionCustomID?.type === 'text') colType = 'varchar'
 
           // make the foreign key column for relationship using the correct id column type
-          targetTable[`${fieldName}ID`] = parentIDColumnMap[colType](`${columnName}_id`).references(
+          targetTable[`${fieldName}`] = parentIDColumnMap[colType](`${columnName}_id`).references(
             () => adapter.tables[slug].id,
             { onDelete: 'cascade' },
           )
@@ -715,7 +715,7 @@ export const traverseFields = ({
 
           // add notNull if when not required
           if (!disableNotNull && field.required && !field.admin?.condition) {
-            targetTable[`${fieldName}ID`].notNull()
+            targetTable[`${fieldName}`].notNull()
           }
         }
 
