@@ -91,6 +91,16 @@ export async function buildConfigWithDefaults(
     //     },
     //   },
     // }),
+    email: ({ payload }) => ({
+      defaultFromAddress: 'dev@payloadcms.com',
+      defaultFromName: 'Payload CMS',
+      sendEmail: async (message) => {
+        payload.logger.info({
+          msg: `Email logged to console. Subject: '${message.subject}'`,
+        })
+        return Promise.resolve()
+      },
+    }),
     endpoints: [localAPIEndpoint, reInitEndpoint],
     editor: lexicalEditor({
       features: [
