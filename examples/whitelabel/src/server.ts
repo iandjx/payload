@@ -15,16 +15,19 @@ app.get('/', (_, res) => {
 
 app.use('/assets', express.static(path.resolve(__dirname, '../assets')));
 
-// Initialize Payload
-payload.init({
-  secret: process.env.PAYLOAD_SECRET,
-  mongoURL: process.env.MONGODB_URI,
-  express: app,
-  onInit: () => {
-    payload.logger.info(`Payload Admin URL: ${payload.getAdminURL()}`);
-  },
-});
+const start = async () => {
+  // Initialize Payload
+  await payload.init({
+    secret: process.env.PAYLOAD_SECRET,
+    express: app,
+    onInit: async () => {
+      payload.logger.info(`Payload Admin URL: ${payload.getAdminURL()}`)
+    },
+  })
 
-// Add your own express routes here
+  // Add your own express routes here
 
-app.listen(3000);
+  app.listen(3000)
+}
+
+start()
